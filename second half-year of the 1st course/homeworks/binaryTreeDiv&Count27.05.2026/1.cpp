@@ -1,14 +1,14 @@
 #include <iostream>
-#include "BinaryTree.hpp"
-#include "LevelList.hpp"
+#include "binaryTree.hpp"
+#include "levelList.hpp"
 
 using namespace std;
 
 struct QueueNode {
-    TreeNode* data;
+    treeNode* data;
     QueueNode* next;
 
-    QueueNode(TreeNode* d) {
+    QueueNode(treeNode* d) {
         data = d;
         next = nullptr;
     }
@@ -36,7 +36,7 @@ struct NodeQueue {
     bool empty() const { return sz == 0; }
     int size() const { return sz; }
 
-    void push(TreeNode* node) {
+    void push(treeNode* node) {
         QueueNode* q = new QueueNode(node);
         if (!back)
             front = back = q;
@@ -47,9 +47,9 @@ struct NodeQueue {
         sz++;
     }
 
-    TreeNode* pop() {
+    treeNode* pop() {
         QueueNode* q = front;
-        TreeNode* t = q->data;
+        treeNode* t = q->data;
         front = front->next;
         if (!front) back = nullptr;
         delete q;
@@ -58,7 +58,7 @@ struct NodeQueue {
     }
 };
 
-LevelList* getLevelCounts(TreeNode* root) {
+LevelList* getLvlCnts(treeNode* root) {
     LevelList* list = new LevelList();
     if (!root) return list;
 
@@ -69,7 +69,7 @@ LevelList* getLevelCounts(TreeNode* root) {
         int levelSize = q.size();
         list->add(levelSize);
         for (int i = 0; i < levelSize; i++) {
-            TreeNode* node = q.pop();
+            treeNode* node = q.pop();
             if (node->left)  q.push(node->left);
             if (node->right) q.push(node->right);
         }
@@ -78,7 +78,7 @@ LevelList* getLevelCounts(TreeNode* root) {
 }
 
 int main() {
-    BinaryTree tree;
+    binaryTree tree;
     int n, val;
     cin >> n;
     for (int i = 0; i < n; i++) {
@@ -86,10 +86,7 @@ int main() {
         tree.insert(val);
     }
 
-    cout << "\nTree:\n";
-    tree.print(cout);
-
-    LevelList* levels = getLevelCounts(tree.getRoot());
+    LevelList* levels = getLvlCnts(tree.getRoot());
     cout << "\nNodes per level:\n";
     levels->print(cout);
     delete levels;

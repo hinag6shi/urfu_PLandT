@@ -1,52 +1,39 @@
 #pragma once
 #include <iostream>
 
-struct TreeNode {
+struct treeNode {
     int val;
-    TreeNode* left;
-    TreeNode* right;
+    treeNode* left;
+    treeNode* right;
 
-    TreeNode(int v) {
+    treeNode(int v) {
         val = v;
         left = nullptr;
         right = nullptr;
     }
 };
 
-class BinaryTree {
+class binaryTree {
 private:
-    TreeNode* root;
+    treeNode* root;
 
-    void destroy(TreeNode* node) {
+    void destroy(treeNode* node) {
         if (!node) return;
         destroy(node->left);
         destroy(node->right);
         delete node;
     }
 
-    void insertBST(TreeNode*& node, int val) {
-        if (!node) {
-            node = new TreeNode(val);
-            return;
-        }
-        if (val < node->val)
-            insertBST(node->left, val);
-        else
-            insertBST(node->right, val);
-    }
-
-    void printHelper(std::ostream& out, TreeNode* node, int depth) const {
-        if (!node) return;
-        printHelper(out, node->right, depth + 1);
-        for (int i = 0; i < depth; i++) out << "    ";
-        out << node->val << "\n";
-        printHelper(out, node->left, depth + 1);
+    void insertBST(treeNode*& node, int val) {
+        if (!node) { node = new treeNode(val); return; }
+        if (val < node->val) insertBST(node->left, val);
+        else insertBST(node->right, val);
     }
 
 public:
-    BinaryTree() { root = nullptr; }
+    binaryTree() { root = nullptr; }
 
-    ~BinaryTree() {
+    ~binaryTree() {
         destroy(root);
     }
 
@@ -54,11 +41,7 @@ public:
         insertBST(root, val);
     }
 
-    TreeNode* getRoot() const {
+    treeNode* getRoot() const {
         return root;
-    }
-
-    void print(std::ostream& out) const {
-        printHelper(out, root, 0);
     }
 };

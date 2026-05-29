@@ -1,9 +1,9 @@
 #include <iostream>
-#include "BinaryTree.hpp"
+#include "binaryTree.hpp"
 
 using namespace std;
 
-TreeNode* findDivisibleByChild(TreeNode* node) {
+treeNode* fndDivByChild(treeNode* node) {
     if (!node) return nullptr;
 
     if (node->left && node->left->val != 0 && node->val % node->left->val == 0)
@@ -11,14 +11,14 @@ TreeNode* findDivisibleByChild(TreeNode* node) {
     if (node->right && node->right->val != 0 && node->val % node->right->val == 0)
         return node;
 
-    TreeNode* res = findDivisibleByChild(node->left);
+    treeNode* res = fndDivByChild(node->left);
     if (res) return res;
 
-    return findDivisibleByChild(node->right);
+    return fndDivByChild(node->right);
 }
 
 int main() {
-    BinaryTree tree;
+    binaryTree tree;
     int n, val;
     cin >> n;
     for (int i = 0; i < n; i++) {
@@ -26,10 +26,7 @@ int main() {
         tree.insert(val);
     }
 
-    cout << "\nTree:\n";
-    tree.print(cout);
-
-    TreeNode* result = findDivisibleByChild(tree.getRoot());
+    treeNode* result = fndDivByChild(tree.getRoot());
     if (result) {
         cout << "\nFound node: " << result->val;
         if (result->left && result->left->val != 0 && result->val % result->left->val == 0)
