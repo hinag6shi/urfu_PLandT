@@ -86,7 +86,7 @@ HashTable::HashTable(int size, size_t (*hash_)(const string& x)) {
     validValue = defvalidValue;
 }
 
-HashTable::HashTable(
+HashTable::HashTable(re
         int size, bool (*validKey_)(const string& x), bool (*validValue_)(const string& x)) {
     bucketCount = size;
     countElements = 0;
